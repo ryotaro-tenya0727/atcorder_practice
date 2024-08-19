@@ -6,7 +6,7 @@ parents = Hash.new(nil)
   chs[u] << v
   chs[v] << u
 end
-
+puts chs.inspect
 
 
 def dfs(start, chs, parents)
@@ -15,7 +15,7 @@ def dfs(start, chs, parents)
   until stack.empty?
     node = stack.pop
     reached[node] = true
-
+    d_count=0
     chs[node].reverse_each do |child|
       next if reached[child]
       stack.push(child)
