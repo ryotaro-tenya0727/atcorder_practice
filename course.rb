@@ -1,23 +1,25 @@
-n,x=gets.split.map(&:to_i)
-a=gets.split.map(&:to_i)
-a.unshift(-1)
+# q = Thread::Queue.new
+# [*1..100].each {|n| q.push(n)}
 
-g=Array.new(n){[]}
+# threads = [*1..5].map do |i|
+#   Thread.new do
+#     until q.empty?
+#       n = q.pop
+#       puts "square of #{n} is #{n**2} (thread #{i})\n"
+#       sleep(rand(0.01..0.1))
+#     end
+#   end
+# end
 
-for i in (1..n-1) do
-  g[a[i]] << i
+# threads.each(&:join)
+
+def foo(n)
+  puts n
+  puts caller
 end
 
-stack=[0]
-depth=Array.new(n+10)
-depth[0]=0
-
-while stack.size!=0
-  v=stack.pop
-  g[v].each do |n|
-    depth[n]=depth[v]+1
-    stack << n
-  end
+def bar(n)
+  foo(n)
 end
 
-puts depth[x]
+bar(5)
