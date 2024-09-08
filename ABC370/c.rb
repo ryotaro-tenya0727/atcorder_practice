@@ -1,5 +1,5 @@
-s=gets.chomp.split("")
-t=gets.chomp.split("")
+s=gets.chomp
+t=gets.chomp
 l=s.size
 x=[]
 count=0
@@ -9,19 +9,19 @@ for i in (0..l-1) do
   end
 end
 dp=Array.new(count+1)
-dp[0]=s.join("")
-for f in (1..count) do
+dp[0]=s
+for i in (1..count) do
   array=[]
-  for i in (0..l-1) do
-    ss = dp[f-1].split('')
-    if ss[i]!=t[i]
-      prev=ss[i].dup
-      ss[i]=t[i]
-      array << ss.join("")
-      ss[i]=prev
+  for j in (0..l-1) do
+    ss = dp[i-1]
+    if ss[j]!=t[j]
+      prev=ss[j].dup
+      ss[j]=t[j]
+      array << ss.dup
+      ss[j]=prev
     end
   end
-  dp[f]=array.min
+  dp[i]=array.min
   x << array.min
 end
 
