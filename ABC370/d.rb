@@ -25,19 +25,19 @@ Q.times do
   end
 
   # 上
-  it = g2[c].to_a.sort.reverse.find { |x| x < r }
+  it = g2[c].to_a.sort.reverse.bsearch { |x| x < r }
   erase.call(it, c) if it
 
   # 下
-  it = g2[c].to_a.sort.find { |x| x > r }
+  it = g2[c].to_a.sort.bsearch { |x| x > r }
   erase.call(it, c) if it
 
   # 左
-  it = g1[r].to_a.sort.reverse.find { |x| x < c }
+  it = g1[r].to_a.sort.reverse.bsearch { |x| x < c }
   erase.call(r, it) if it
 
   # 右
-  it = g1[r].to_a.sort.find { |x| x > c }
+  it = g1[r].to_a.sort.bsearch { |x| x > c }
   erase.call(r, it) if it
 end
 puts g1.sum(&:size)
