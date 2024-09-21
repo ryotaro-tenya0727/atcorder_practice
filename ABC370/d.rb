@@ -1,12 +1,9 @@
-require "pry"
-
-# 標準入力を高速化
-$stdin.sync = true
+require "sorted_set"
 
 H, W, Q = gets.split.map(&:to_i)
 
-g1 = Array.new(H) { Set.new(0..W-1) }
-g2 = Array.new(W) { Set.new(0..H-1) }
+g1 = Array.new(H) { SortedSet.new(0..W-1) }
+g2 = Array.new(W) { SortedSet.new(0..H-1) }
 
 erase = ->(i, j) {
   g1[i].delete(j)
@@ -25,19 +22,19 @@ Q.times do
   end
 
   # 上
-  it = g2[c].to_a.sort.reverse.bsearch { |x| x < r }
+  it = g2[c].to_a.reverse.bsearch { |x| x < r }
   erase.call(it, c) if it
 
   # 下
-  it = g2[c].to_a.sort.bsearch { |x| x > r }
+  it = g2[c].to_a.bsearch { |x| x > r }
   erase.call(it, c) if it
 
   # 左
-  it = g1[r].to_a.sort.reverse.bsearch { |x| x < c }
+  it = g1[r].to_a.reverse.bsearch { |x| x < c }
   erase.call(r, it) if it
 
   # 右
-  it = g1[r].to_a.sort.bsearch { |x| x > c }
+  it = g1[r].to_a.bsearch { |x| x > c }
   erase.call(r, it) if it
 end
 puts g1.sum(&:size)
