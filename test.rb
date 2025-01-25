@@ -1,15 +1,29 @@
-require "benchmark"
-n = 10**6
-a = Array.new(n){ rand(n) }
-b, c, d, e, f = a.dup, a.dup, a.dup, a.dup, a.dup
-Benchmark.bm(11) do |r|
-  x = r.report("sort    "){ a = a.sort }
-  y = r.report("sort_by    "){ b = b.sort_by{ |b| b }}
-  # y = r.report("sort_by "){ b = b.sort_by{ |e| -e }  }
-  # z = r.report("sort!   "){ c.sort!{ |a, b| b <=> a } }
-  # w = r.report("sort_by!"){ d.sort_by!{ |e| -e }  }
-  # s = r.report("sort.reverse"){ e.sort.reverse  }
-  # p w.real / s.real
+require 'set'
+
+# 入力処理
+n,m=gets.split.map(&:to_i)
+g=Array.new(n+1){[]}
+m.times{
+  a,b=gets.split.map(&:to_i)
+  g[a] << b
+}
+
+# BFSの初期化
+queue = [1]
+visited = Set.new([1])
+count=0
+
+# BFS実行
+while !queue.empty?
+  v = queue.shift
+  g[v].each do |neighbor|
+    unless visited.include?(neighbor)
+      queue << neighbor
+      visited.add(neighbor)
+      count+=1
+    end
+  end
 end
 
-# puts a
+# 最大の頂点番号を出力
+puts count
